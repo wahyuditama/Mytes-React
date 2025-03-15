@@ -3,8 +3,8 @@ import axios from "axios";
 
 const Api = () => {
     const [users, setUsers] = useState([]);
-    const [newUser, setNewUser] = useState({ name: "", email: "" });
-    const [updatedUser, setUpdatedUser] = useState({ name: "", email: "" });
+    const [newUser, setNewUser] = useState({ name: "", email: "", telepon:"" });
+    const [updatedUser, setUpdatedUser] = useState({ name: "", email: "", telepon:"" });
     const [isEdit, setEdit] = useState(false);
     const startEditing = (user) => {
         setUpdatedUser(user);
@@ -26,7 +26,7 @@ const Api = () => {
         axios.post(`${API_URL}/users`, newUser)
             .then((res) => {
                 setUsers([...users, res.data]);
-                setNewUser({ name: "", email: "" });
+                setNewUser({ name: "", email: "", telepon:"" });
             })
     };
     
@@ -38,7 +38,7 @@ const Api = () => {
         axios.put(`${API_URL}/users/${updatedUser.id}`, updatedUser)
             .then((res) => {
                 setUsers(users.map((user) => (user.id === updatedUser.id ? res.data : user)));
-                setUpdatedUser({ id: null, name: "", email: "" });
+                setUpdatedUser({ id: null, name: "", email: "", telepon:"" });
                 setEdit(false);
             });
     };    
@@ -59,6 +59,10 @@ const Api = () => {
                 <div className="mb-3">
                     <input type="email" name="email" placeholder="Maasukan Email" className="form-control" value={isEdit? updatedUser.email : newUser.email} onChange={isEdit ? handleEditChange : handleChange} />
                 </div>
+
+                <div className="mb-3">
+                    <input type="number" name="telepon" placeholder="Maasukan nomor telepon" className="form-control" value={isEdit? updatedUser.telepon : newUser.telepon} onChange={isEdit ? handleEditChange : handleChange} />
+                </div>
                 
            {isEdit ? (
             <div className="mb-3">
@@ -73,6 +77,7 @@ const Api = () => {
                             <th>No</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>No. Telepon</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -80,9 +85,10 @@ const Api = () => {
                {users.map((user, index) => (
                    <tr key={user.id}>
                         {/* <td>{index+1}</td> */}
-                        <td>{user.id}</td>
+                        <td>{index + 1}</td>
                         <td>{user.name}</td>
                         <td>{user.email}</td>
+                        <td>{user.telepon}</td>
                        <td>
                        <button className="btn btn-sm btn-primary" onClick={() => startEditing(user)}>Edit</button>
                        <button className="btn btn-sm btn-danger mx-3" onClick={() => handleDeleteUser(user.id)}>Hapus</button>

@@ -4,10 +4,10 @@ import {usersData} from '../data'
 
 const CRUD = ()=> {
   const [users, setUsers] = useState(usersData);
-  const [formData, setFormData] = useState({id:null, name:"", email:"", role:""});
+  const [formData, setFormData] = useState({ id:null, name: "", email: "", role:""});
 
   const handleChange = (e)=> {
-    setFormData({...formData,[e.target.name]: e.target.value});
+    setFormData({...formData, [e.target.name]: e.target.value});
   };
 
   const handleSubmit = (e)=> {
@@ -17,18 +17,18 @@ const CRUD = ()=> {
     if(formData.id){
       setUsers(users.map((data)=> (data.id === formData.id ? formData : data)));
     }else{
-      setUsers([...users,{...formData, id:users.length + 1}]);
+      setUsers([...users, {...formData, id: users.length + 1}]);
     }
     setFormData({id:null, name:"", email:"", role:""});
-  }
+  };
 
-  const handleEdit = (param)=> {
-    setFormData(param);
+  const handleEdit = (params)=> {
+    setFormData(params)
   };
 
   const handleDelete = (id)=> {
-    setUsers(users.filter((user)=> user.id !== id));
-  };
+    setUsers(users.filter((user)=> user.id !==id));
+  }
   return (
     <div style={{padding: "20px"}}>
       <h2>Halaman CRUD</h2>
@@ -76,5 +76,6 @@ const CRUD = ()=> {
     </div>
   );
 }
+
 
 export default CRUD;
